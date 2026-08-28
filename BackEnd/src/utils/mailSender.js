@@ -2,15 +2,20 @@ import nodemailer from "nodemailer";
 
 const mailSender = async (email, body, subject) => {
   try {
-    const transporter = nodemailer.createTransport({
-      host: process.env.MAIL_HOST,
-      port: 587,
-      secure: false,
-      auth: {
-        user: process.env.MAIL_USER,
-        pass: process.env.MAIL_PASS,
-      },
-    });
+   const transporter = nodemailer.createTransport({
+  host: process.env.MAIL_HOST,
+  port: 587,
+  secure: false,
+  auth: {
+    user: process.env.MAIL_USER,
+    pass: process.env.MAIL_PASS
+  }
+});
+
+await transporter.verify();
+console.log("SMTP connection successful");
+
+
 
     const mailOptions = {
       from: process.env.MAIL_USER,
