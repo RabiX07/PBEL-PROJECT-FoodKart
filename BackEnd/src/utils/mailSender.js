@@ -1,36 +1,37 @@
 import nodemailer from "nodemailer";
 
-const mailSender = async (email, body, subject) => {
-  try {
-   const transporter = nodemailer.createTransport({
-  host: process.env.MAIL_HOST,
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.MAIL_USER,
-    pass: process.env.MAIL_PASS
-  }
+const transporter = nodemailer.createTransport({
+    host: process.env.MAIL_HOST,
+    port: 587,
+    secure: false,
+    auth: {
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASS
+    }
 });
 
-await transporter.verify();
-console.log("SMTP connection successful");
+const mailSender = async (email, body, subject) => {
+    try {
+        console.log("mailSender started");
+        console.log("MAIL_HOST:", process.env.MAIL_HOST);
 
+        console.log("Calling sendMail...");
 
+        const info = await transporter.sendMail({
+            from: process.env.MAIL_USER,
+            to: email,
+            subject,
+            html: body
+        });
 
-    const mailOptions = {
-      from: process.env.MAIL_USER,
-      to: email,
-      subject: subject,
-      html: body,
-    };
+        console.log("sendMail finished");
 
-    const info = await transporter.sendMail(mailOptions);
+        return info;
 
-    return info;
-  } catch (error) {
-    console.error("Error sending mail:", error);
-    throw error;
-  }
+    } catch (error) {
+        console.error("MAIL ERROR:", error);
+        throw error;
+    }
 };
 
 export default mailSender;
