@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-import mailSender from '../utils/mailSender.js'
-import otpMail from '../templates/otpMail.js'
+// import mailSender from '../utils/mailSender.js'
+// import otpMail from '../templates/otpMail.js'
 
 const OTPschema = new mongoose.Schema({
     email:{
@@ -20,28 +20,28 @@ const OTPschema = new mongoose.Schema({
 });
 
 
-const verificationMailSender = async (email,otp)=>{
+// const verificationMailSender = async (email,otp)=>{
            
-          const mailResponse = await mailSender(email,otpMail(otp),"account verification -- FoodKart");
-      return mailResponse;
+//           const mailResponse = await mailSender(email,otpMail(otp),"account verification -- FoodKart");
+//       return mailResponse;
 
-}
+// }
 
 
-OTPschema.pre('save', async function (next){
-    // console.log('new doc save to DB');
+// OTPschema.pre('save', async function (next){
+//     // console.log('new doc save to DB');
 
-    if(this.isNew){
-        // console.log("in here mailsender call");
-        //  issue was with arrow function wich dont bind "this"
+//     if(this.isNew){
+//         // console.log("in here mailsender call");
+//         //  issue was with arrow function wich dont bind "this"
         
-      const mailRes =  await verificationMailSender(this.email,this.otp);
-    //   console.log(mailRes);
+//       const mailRes =  await verificationMailSender(this.email,this.otp);
+//     //   console.log(mailRes);
       
-    }
+//     }
     
-    next()
-})
+//     next()
+// })
 
 
 export default mongoose.model("OTP", OTPschema)

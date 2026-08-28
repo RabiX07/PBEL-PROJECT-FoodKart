@@ -3,6 +3,8 @@ import OTP from "../model/OTP.js";
 import bcrypt from "bcrypt"
 import jwt from 'jsonwebtoken';
 import generateOTP from '../utils/OTPgenerator.js'
+import mailSender from "../utils/mailSender.js";
+import otpMail from "../templates/otpMail.js";
 
 export const createUser = async (req, res) => {
     try {
@@ -93,62 +95,71 @@ export const loginUser = async (req, res) => {
 };
 
 
+
+
 export const SendOpt = async (req, res) => {
 
     try {
+
         const { email } = req.body;
 
-        console.log(email);
-
+        console.log("Email received:", email);
 
         if (!email) {
-            return res.status(404).json({
+            return res.status(400).json({
                 success: false,
                 message: "email can't be empty"
-            })
-        };
-
+            });
+        }
 
         let newOTP;
 
         do {
             newOTP = generateOTP();
 
+        } while (
+            await OTP.findOne({
+                email: email,
+                otp: newOTP
+            })
+        );
 
 
-        }
-        while (await OTP.findOne({ email: email, otp: newOTP }));
-
-        // console.log(newOTP);
-
-
+        // Save OTP
         const createOtp = await OTP.create({
             email,
             otp: newOTP,
         });
 
-        console.log(createOtp);
+        console.log("OTP saved:", createOtp);
+
+
+        // Send email
+        const mailResponse = await mailSender(
+            email,
+            otpMail(newOTP),
+            "Account Verification -- FoodKart"
+        );
+
+        console.log("Verification email sent:", mailResponse.messageId);
 
 
         return res.status(200).json({
             success: true,
-            message: "OTP Sent To your Mail Successfully",
-            createOtp,
+            message: "OTP sent to your mail successfully"
         });
 
 
-
     } catch (error) {
-        console.log('something went wrong while sending OTP');
+
+        console.error(
+            "Something went wrong while sending OTP:",
+            error
+        );
 
         return res.status(500).json({
             success: false,
-            message: "failed to send OTP"
-        })
-
-
+            message: "Failed to send OTP"
+        });
     }
-
-
-
 };
