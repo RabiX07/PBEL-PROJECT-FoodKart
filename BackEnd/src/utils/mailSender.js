@@ -1,37 +1,30 @@
-import nodemailer from "nodemailer"
-// import dotenv from "dotenv"
+const nodemailer = require('nodemailer');
 
-// dotenv.config()
+const mailSender = async (email, body, subject) => {
+  try {
+    const transporter = nodemailer.createTransport({
+      host: process.env.MAIL_HOST,
+      auth: {
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASS
+      }
+    });
 
+    const mailOptions = {
+      from: process.env.MAIL_USER,
+      to: email,
+      subject: subject,
+      html: body
+    };
 
-export const mailSender = async (email,body,subject)=>{
-    try{
-       const transporter = nodemailer.createTransport({
-        host:process.env.MAIL_HOST,
-        auth:{     
-            user:process.env.MAIL_USER,
-            pass:process.env.MAIL_PASS
-        }
-       });
+    const info = await transporter.sendMail(mailOptions);
 
-       const mailOptions = {
-        from: 'dev.test.dt007@gmail.com',
-        to: `${email}`, 
-        subject: `${subject}`, 
-        html: `${body}`, 
-       };
+    return info;
 
-       await  transporter.sendMail(mailOptions);
+  } catch (error) {
+    console.error('Error sending mail:', error);
+    throw error;
+  }
+};
 
-    //    console.log(info);
-    
-
-
-
-
-
-    }catch(error){
-        console.log('something went wrong while sending verification mail', error);
-        
-    }
-}
+module.exports = mailSender;
