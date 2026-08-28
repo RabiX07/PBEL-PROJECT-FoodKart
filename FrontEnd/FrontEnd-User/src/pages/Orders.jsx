@@ -31,89 +31,89 @@ export default function Orders() {
     fetchOrders();
   }, []);
 
- useEffect(() => {
-    let socket;
+//  useEffect(() => {
+//     let socket;
 
-    async function connectUserSocket() {
-        try {
-            // Get the currently authenticated user
-            const res = await axiosInstance.get("/profile/profile");
+//     async function connectUserSocket() {
+//         try {
+//             // Get the currently authenticated user
+//             const res = await axiosInstance.get("/profile/profile");
 
-            if (!res.data.success || !res.data.user?._id) {
-                console.error("Could not get authenticated user");
-                return;
-            }
+//             if (!res.data.success || !res.data.user?._id) {
+//                 console.error("Could not get authenticated user");
+//                 return;
+//             }
 
-            const userId = res.data.user._id;
+//             const userId = res.data.user._id;
 
-            // Connect Socket.IO
-            socket = io(import.meta.env.VITE_API_URL, {
-                withCredentials: true,
-            });
+//             // Connect Socket.IO
+//             socket = io(import.meta.env.VITE_API_URL, {
+//                 withCredentials: true,
+//             });
 
-            socket.on("connect", () => {
-                console.log("User socket connected:", socket.id);
+//             socket.on("connect", () => {
+//                 console.log("User socket connected:", socket.id);
 
-                // Join this customer's private room
-                socket.emit("join-user", userId);
-            });
+//                 // Join this customer's private room
+//                 socket.emit("join-user", userId);
+//             });
 
-            // Listen for this customer's order becoming ready
-            socket.on("order-ready", (data) => {
-                console.log("Order ready notification:", data);
+//             // Listen for this customer's order becoming ready
+//             socket.on("order-ready", (data) => {
+//                 console.log("Order ready notification:", data);
 
-                toast.success(
-                    data.message ||
-                        "Your order is ready to collect!",
-                    {
-                        duration: 5000,
-                        style: {
-                            background: "#f6b318",
-                            color: "#111",
-                            fontWeight: "600",
-                        },
-                    }
-                );
+//                 toast.success(
+//                     data.message ||
+//                         "Your order is ready to collect!",
+//                     {
+//                         duration: 5000,
+//                         style: {
+//                             background: "#f6b318",
+//                             color: "#111",
+//                             fontWeight: "600",
+//                         },
+//                     }
+//                 );
 
-                // Update order state immediately
-                setOrders((prevOrders) =>
-                    prevOrders.map((order) =>
-                        order._id === data.orderId
-                            ? {
-                                  ...order,
-                                  orderState:
-                                      "Ready to collect",
-                              }
-                            : order
-                    )
-                );
-            });
+//                 // Update order state immediately
+//                 setOrders((prevOrders) =>
+//                     prevOrders.map((order) =>
+//                         order._id === data.orderId
+//                             ? {
+//                                   ...order,
+//                                   orderState:
+//                                       "Ready to collect",
+//                               }
+//                             : order
+//                     )
+//                 );
+//             });
 
-            socket.on("connect_error", (error) => {
-                console.error(
-                    "User Socket.IO connection error:",
-                    error
-                );
-            });
-        } catch (error) {
-            console.error(
-                "Failed to initialize user socket:",
-                error
-            );
-        }
-    }
+//             socket.on("connect_error", (error) => {
+//                 console.error(
+//                     "User Socket.IO connection error:",
+//                     error
+//                 );
+//             });
+//         } catch (error) {
+//             console.error(
+//                 "Failed to initialize user socket:",
+//                 error
+//             );
+//         }
+//     }
 
-    connectUserSocket();
+//     connectUserSocket();
 
-    return () => {
-        if (socket) {
-            socket.off("connect");
-            socket.off("order-ready");
-            socket.off("connect_error");
-            socket.disconnect();
-        }
-    };
-}, []);
+//     return () => {
+//         if (socket) {
+//             socket.off("connect");
+//             socket.off("order-ready");
+//             socket.off("connect_error");
+//             socket.disconnect();
+//         }
+//     };
+// }, []);
 
   if (loading) {
     return (
