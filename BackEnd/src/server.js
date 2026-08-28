@@ -21,9 +21,9 @@ import notificationRoute from "./routes/Notification/notificationRoute.js";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 
-import dns from "node:dns";
+// import dns from "node:dns";
 
-dns.setServers(["1.1.1.1", "8.8.8.8"]);
+// dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
 dotenv.config();
 
