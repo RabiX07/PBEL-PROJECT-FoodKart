@@ -41,6 +41,7 @@ export const adminLogin = async (req, res) => {
     const { email, password } = req.body;
 
     const admin = await Admin.findOne({ email });
+
     if (!admin) {
       return res.status(404).json({
         success: false,
@@ -49,6 +50,7 @@ export const adminLogin = async (req, res) => {
     }
 
     const isMatch = await bcrypt.compare(password, admin.password);
+
     if (!isMatch) {
       return res.status(401).json({
         success: false,
@@ -56,7 +58,6 @@ export const adminLogin = async (req, res) => {
       });
     }
 
-    // Update login time
     admin.lastLogin = new Date();
     await admin.save();
 
@@ -66,29 +67,34 @@ export const adminLogin = async (req, res) => {
         role: admin.role,
       },
       process.env.JWT_SECRET,
-      { expiresIn: "7d" }
+      {
+        expiresIn: "7d",
+      }
     );
 
-   res
-  .status(200)
-  .cookie("adminToken", token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production", // auto secure in prod
-    sameSite: "strict",
-    maxAge: 7 * 24 * 60 * 60 * 1000,
-  })
-  .json({
-    success: true,
-    message: "Login successful",
-    adminId: admin._id,
-  });
+    res
+      .status(200)
+      .cookie("adminToken", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      })
+      .json({
+        success: true,
+        message: "Login successful",
+        adminId: admin._id,
+      });
 
   } catch (error) {
     console.error("Admin Login Error:", error);
-    res.status(500).json({ success: false, message: "Server error" });
+
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
   }
 };
-
 
 
 
