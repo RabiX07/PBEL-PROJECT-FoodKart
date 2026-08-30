@@ -1,37 +1,40 @@
-import nodemailer from "nodemailer";
-
-
-const transporter = nodemailer.createTransport({
-    host: process.env.MAIL_HOST,
-    auth: {
-        user: process.env.MAIL_USER,
-        pass: process.env.MAIL_PASS
-    }
-});
-
 const mailSender = async (email, body, subject) => {
     try {
-        console.log("mailSender started");
-        console.log("MAIL_HOST:", process.env.MAIL_HOST);
+        console.log("Sending email through Brevo API...");
 
-        console.log("Checking SMTP connection...");
-
-        await transporter.verify();
-
-        console.log("SMTP connection successful");
-
-        console.log("Calling sendMail...");
-
-        const info = await transporter.sendMail({
-            from: process.env.MAIL_USER,
-            to: email,
-            subject,
-            html: body
+        const response = await fetch("https://api.brevo.com/v3/smtp/email", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "api-key": process.env.BREVO_API_KEY
+            },
+            body: JSON.stringify({
+                sender: {
+                    name: "FoodKard",
+                    email: process.env.MAIL_USER
+                },
+                to: [
+                    {
+                        email: email
+                    }
+                ],
+                subject: subject,
+                htmlContent: body
+            })
         });
 
-        console.log("sendMail finished");
+        const data = await response.json();
 
-        return info;
+        if (!response.ok) {
+            console.error("BREVO ERROR:", data);
+            throw new Error(
+                data.message || "Failed to send email through Brevo"
+            );
+        }
+
+        console.log("Email sent successfully through Brevo:", data);
+
+        return data;
 
     } catch (error) {
         console.error("MAIL ERROR:", error);
