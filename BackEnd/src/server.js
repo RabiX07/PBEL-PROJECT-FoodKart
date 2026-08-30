@@ -30,6 +30,67 @@ dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 
+// ..........................................................
+
+
+
+
+const socket = net.createConnection(
+    {
+        host: "smtp.gmail.com",
+        port: 587,
+        family: 4,
+        timeout: 10000
+    },
+    () => {
+        console.log("===== SMTP TCP CONNECTION SUCCESS =====");
+        socket.end();
+    }
+);
+
+socket.on("error", (err) => {
+    console.error("===== SMTP TCP CONNECTION FAILED =====");
+    console.error(err);
+});
+
+socket.on("timeout", () => {
+    console.error("===== SMTP TCP CONNECTION TIMEOUT =====");
+    socket.destroy();
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//..........................................
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // --------------------------------------------------
 // EXPRESS APP
 // --------------------------------------------------
