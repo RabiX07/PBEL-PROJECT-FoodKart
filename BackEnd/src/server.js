@@ -22,6 +22,8 @@ import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 
 import dns from "node:dns";
+import net from "node:net";
+
 
 dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
