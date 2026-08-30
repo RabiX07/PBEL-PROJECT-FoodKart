@@ -32,31 +32,6 @@ dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 
-// ..........................................................
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//..........................................
-
-
 
 
 
@@ -88,6 +63,7 @@ const httpServer = createServer(app);
 const allowedOrigins = [
   "http://localhost:5173",
    "http://localhost:5174",
+   "https://pbel-project-food-kart.vercel.app",
   "https://food-kart-user.vercel.app",
   
 ];
