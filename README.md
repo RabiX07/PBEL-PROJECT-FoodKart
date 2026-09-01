@@ -178,6 +178,8 @@ FoodKart was developed as a college project to address common canteen problems s
 ## 👨‍💻 Author
 
 **Rabi Singh**
+**Pravesh Burathoki**
+**Rupashree Panda**
 
 GitHub: https://github.com/RabiX07
 
