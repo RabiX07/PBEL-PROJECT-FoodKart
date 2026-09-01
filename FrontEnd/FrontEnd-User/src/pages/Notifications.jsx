@@ -8,15 +8,15 @@ export default function Notifications() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
-      <div className="max-w-4xl mx-auto px-5 py-10">
+      <div className="max-w-4xl mx-auto px-4 sm:px-5 py-6 sm:py-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center justify-between gap-4 mb-8"
+          className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8"
         >
           <div>
-            <h1 className="text-3xl font-bold">Notifications</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold">Notifications</h1>
 
             <p className="text-white/60 mt-2">Stay updated with your orders.</p>
           </div>
@@ -24,7 +24,7 @@ export default function Notifications() {
           {unreadCount > 0 && (
             <button
               onClick={markAllAsRead}
-              className="px-4 py-2 rounded-lg font-semibold text-black"
+              className="w-full sm:w-auto px-4 py-2 rounded-lg font-semibold text-black"
               style={{
                 backgroundColor: "#f6b318",
               }}
@@ -39,7 +39,7 @@ export default function Notifications() {
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white/10 backdrop-blur-xl rounded-2xl p-10 text-center"
+            className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 sm:p-10 text-center"
           >
             <div className="text-4xl mb-4">🔔</div>
 
@@ -84,7 +84,7 @@ export default function Notifications() {
                 />
               )}
 
-              <div className="flex gap-4">
+              <div className="flex min-w-0 gap-4">
                 {/* Icon */}
                 <div
                   className="w-11 h-11 rounded-full flex items-center justify-center shrink-0"
@@ -96,12 +96,12 @@ export default function Notifications() {
                 </div>
 
                 {/* Content */}
-                <div className="flex-1 pr-5">
-                  <h3 className="font-semibold text-lg">
+                <div className="flex-1 min-w-0 pr-5">
+                  <h3 className="font-semibold text-lg break-words">
                     {notification.title}
                   </h3>
 
-                  <p className="text-white/60 mt-1">{notification.message}</p>
+                  <p className="text-white/60 mt-1 break-words">{notification.message}</p>
 
                   <p className="text-white/40 text-sm mt-3">
                     {new Date(notification.createdAt).toLocaleString()}

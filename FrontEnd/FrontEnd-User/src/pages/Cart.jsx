@@ -226,14 +226,14 @@ export default function Cart() {
     return <div className="text-white text-center mt-20 text-xl">Loading...</div>;
 
   return (
-    <div className="h-screen w-full relative bg-gray-900 text-white">
+    <div className="min-h-dvh w-full relative bg-gray-900 text-white">
 
 
       {/* Content */}
-      <div className="relative z-10 w-[70%] mx-auto py-12 px-10 max-h-screen overflow-scroll">
+      <div className="relative z-10 w-full sm:w-[90%] lg:w-[70%] mx-auto py-7 sm:py-10 md:py-12 px-4 sm:px-6 md:px-10 min-h-dvh">
 
-        <h1 className="text-4xl font-bold mb-4">Your Cart</h1>
-        <p className="text-white/60 mb-10">Review items before checkout</p>
+        <h1 className="text-3xl sm:text-4xl font-bold mb-3 sm:mb-4">Your Cart</h1>
+        <p className="text-white/60 mb-6 sm:mb-10">Review items before checkout</p>
 
         {/* Cart Items */}
         <motion.div
@@ -248,21 +248,21 @@ export default function Cart() {
             mergedCart.map((item) => (
               <div
                 key={item.id}
-                className="flex items-center gap-6 bg-white/10 backdrop-blur-xl rounded-xl p-5 shadow hover:scale-[1.01] transition-transform"
+                className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 bg-white/10 backdrop-blur-xl rounded-xl p-4 sm:p-5 shadow hover:scale-[1.01] transition-transform"
               >
                 <img
                   src={item.img}
                   alt={item.name}
-                  className="w-24 h-24 rounded-lg object-cover"
+                  className="w-full h-44 sm:w-24 sm:h-24 rounded-lg object-cover"
                 />
 
-                <div className="flex-1">
-                  <h2 className="text-xl font-semibold">{item.name}</h2>
+                <div className="flex-1 min-w-0 w-full">
+                  <h2 className="text-xl font-semibold break-words">{item.name}</h2>
                   <p className="text-white/60 text-sm">₹{item.price}</p>
                 </div>
 
                 {/* Quantity */}
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 self-start sm:self-auto">
                   <button
                     onClick={() => updateQty(item.id, "dec")}
                     className="px-3 py-1 rounded-lg bg-white/10 text-white text-lg hover:bg-white/20"
@@ -283,14 +283,14 @@ export default function Cart() {
                 </div>
 
                 {/* Item total */}
-                <div className="text-white font-semibold text-xl">
+                <div className="text-white font-semibold text-xl self-start sm:self-auto break-words">
                   ₹{item.price * item.qty}
                 </div>
 
                 {/* Remove */}
                 <button
                   onClick={() => removeItem(item.id)}
-                  className="ml-4 px-3 py-1 rounded-lg bg-red-500 hover:bg-red-600"
+                  className="sm:ml-4 w-full sm:w-auto px-3 py-2 sm:py-1 rounded-lg bg-red-500 hover:bg-red-600"
                 >
                   Remove
                 </button>
@@ -305,11 +305,11 @@ export default function Cart() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="mt-10 bg-white/10 backdrop-blur-2xl p-6 rounded-xl shadow"
+            className="mt-8 sm:mt-10 bg-white/10 backdrop-blur-2xl p-4 sm:p-6 rounded-xl shadow"
           >
-            <div className="flex justify-between text-xl mb-4">
-              <span>Total</span>
-              <span className="font-bold">₹{total}</span>
+            <div className="flex justify-between gap-4 text-xl mb-4">
+              <span className="min-w-0 break-words">Total</span>
+              <span className="font-bold text-right break-words">₹{total}</span>
             </div>
 
             {/* ⭐ PAYMENT METHOD DROPDOWN */}

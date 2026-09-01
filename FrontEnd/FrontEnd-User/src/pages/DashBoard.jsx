@@ -16,6 +16,7 @@ export default function Dashboard() {
   const [cartLoading, setCartLoading] = useState(true);
   const [loadingProductId, setLoadingProductId] = useState(null);
   const [logoutLoading, setLogoutLoading] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { unreadCount } = useNotifications();
 
   // Normalize backend cart → productId always string
@@ -132,7 +133,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="h-screen w-full relative bg-gray-900 text-gray-900">
+    <div className="dashboard-shell min-h-dvh md:h-dvh w-full relative bg-gray-900 text-gray-900 overflow-x-hidden">
       {/* Background pattern */}
       {/* <div className="absolute inset-0 overflow-hidden">
         <svg
@@ -158,7 +159,7 @@ export default function Dashboard() {
       {/* Main layout */}
       <div className="relative z-10 flex">
         {/* Sidebar */}
-        <aside className="w-64 h-screen bg-white/5 backdrop-blur-xl border-r border-white/10 p-6 hidden md:flex flex-col">
+        <aside className="dashboard-sidebar w-64 h-screen bg-white/5 backdrop-blur-xl border-r border-white/10 p-6 hidden md:flex flex-col">
           <div className="flex items-center gap-3 mb-10">
             <div className="w-10 h-10 rounded-lg bg-white/90 flex items-center justify-center text-2xl font-extrabold text-indigo-600">
               FK
@@ -196,18 +197,27 @@ export default function Dashboard() {
         </aside>
 
         {/* Main content */}
-        <main className="flex-1 max-h-screen p-6 md:p-10">
+        <main className="dashboard-main flex-1 min-w-0 min-h-dvh md:max-h-screen p-4 sm:p-6 md:p-8 lg:p-10">
           {/* Top bar */}
-          <div className="flex items-center justify-between mb-10">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-10">
             <div>
-              <h1 className="text-3xl font-bold text-white">Dashboard</h1>
-              <p className="text-white/60">
+              <h1 className="text-2xl sm:text-3xl font-bold text-white">Dashboard</h1>
+              <p className="text-sm sm:text-base text-white/60 max-w-xl">
                 Welcome back! Track your orders, explore foods, and enjoy
                 seamless shopping.
               </p>
             </div>
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3 self-end sm:self-auto">
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen((open) => !open)}
+                className="landscape-mobile-toggle md:hidden flex items-center justify-center w-10 h-10 rounded-lg bg-white/10 hover:bg-white/20 transition text-white"
+                aria-label="Toggle navigation menu"
+                aria-expanded={mobileMenuOpen}
+              >
+                <span className="text-xl leading-none">☰</span>
+              </button>
               {/* Notification Bell */}
               <Link
                 to="/notifications"
@@ -246,10 +256,19 @@ export default function Dashboard() {
               <img
                 src={profile}
                 alt="profile"
-                className="w-12 h-12 rounded-full border-2 border-white/50"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-white/50"
               />
             </div>
           </div>
+
+          {mobileMenuOpen && (
+            <nav className="landscape-mobile-navigation md:hidden grid grid-cols-2 gap-2 mb-6 rounded-xl border border-white/10 bg-white/10 p-3 text-sm text-white/80 backdrop-blur-xl">
+              <Link to="/dashboard" onClick={() => setMobileMenuOpen(false)} className="rounded-lg bg-white/10 px-3 py-2.5 hover:bg-white/20">🏠 Home</Link>
+              <Link to="/orders" onClick={() => setMobileMenuOpen(false)} className="rounded-lg bg-white/10 px-3 py-2.5 hover:bg-white/20">📦 Orders</Link>
+              <Link to="/cart" onClick={() => setMobileMenuOpen(false)} className="rounded-lg bg-white/10 px-3 py-2.5 hover:bg-white/20">🛒 Cart</Link>
+              <Link to="/settings" onClick={() => setMobileMenuOpen(false)} className="rounded-lg bg-white/10 px-3 py-2.5 hover:bg-white/20">⚙️ Settings</Link>
+            </nav>
+          )}
 
           {/* Stats */}
           {/* <motion.div
@@ -282,13 +301,13 @@ export default function Dashboard() {
           </motion.div> */}
 
           {/* Popular items */}
-          <h2 className="text-2xl font-semibold text-white mt-12 mb-4">MENU</h2>
+          <h2 className="text-xl sm:text-2xl font-semibold text-white mt-6 md:mt-12 mb-4">MENU</h2>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-5 px-5 max-h-[82%] overflow-scroll"
+            className="dashboard-menu-grid grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 pb-5 md:px-5 md:max-h-[82%] md:overflow-y-auto"
           >
             {cartLoading ? (
               <div className="text-white/60">Loading cart...</div>
@@ -303,7 +322,7 @@ export default function Dashboard() {
                     key={p._id}
                     className="bg-white/10 backdrop-blur-xl rounded-xl overflow-hidden shadow hover:scale-[1.02] transition-transform"
                   >
-                    <div className="w-full h-56 overflow-hidden rounded-t-xl bg-transparent">
+                    <div className="w-full h-28 sm:h-36 md:h-40 lg:h-48 xl:h-56 overflow-hidden rounded-t-xl bg-transparent">
                       <img
                         src={p.imageUrl}
                         alt={p.name}
@@ -311,24 +330,24 @@ export default function Dashboard() {
                       />
                     </div>
 
-                    <div className="p-4 text-white">
-                      <div className="font-semibold text-lg">{p.name}</div>
-                      <p className="text-white/60 text-sm mt-1">
+                    <div className="p-3 sm:p-4 text-white">
+                      <div className="font-semibold text-base sm:text-lg break-words">{p.name}</div>
+                      <p className="text-white/60 text-sm mt-1 break-words">
                         {p.description.length > 40
                           ? p.description.slice(0, 40) + "..."
                           : p.description}
                       </p>
 
-                      <div className="mt-2 flex justify-between text-white">
-                        <span className="font-bold">₹{p.price}</span>
-                        <span className="text-white/70">Stock: {p.stock}</span>
+                      <div className="mt-2 flex items-center justify-between gap-2 text-sm sm:text-base text-white">
+                        <span className="font-bold break-words">₹{p.price}</span>
+                        <span className="text-white/70 text-right break-words">Stock: {p.stock}</span>
                       </div>
 
                       {/* Add / Remove */}
                       {cartItem ? (
                         <button
                           onClick={() => handleRemoveFromCart(p._id)}
-                          className="mt-4 w-full py-2 rounded-lg font-semibold shadow bg-red-500 hover:bg-red-600 transition"
+                          className="mt-3 sm:mt-4 w-full py-2 rounded-lg font-semibold shadow bg-red-500 hover:bg-red-600 transition"
                         >
                           Remove from Cart
                         </button>
@@ -336,7 +355,7 @@ export default function Dashboard() {
                         <button
                           onClick={() => handleAddToCart(p._id)}
                           disabled={loadingProductId === p._id}
-                          className={`mt-4 w-full py-2 rounded-lg font-semibold shadow transition 
+                          className={`mt-3 sm:mt-4 w-full py-2 rounded-lg font-semibold shadow transition
                         ${loadingProductId === p._id ? "opacity-50 cursor-not-allowed" : "hover:scale-[1.02]"}`}
                           style={{
                             backgroundColor: PRIMARY_YELLOW,

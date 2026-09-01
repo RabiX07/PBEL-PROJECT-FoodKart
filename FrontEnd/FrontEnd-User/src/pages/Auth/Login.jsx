@@ -67,7 +67,7 @@ export default function Login() {
       {/* dark overlay for better contrast */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/25 to-black/60 pointer-events-none" />
 
-      <div className="relative z-10 min-h-screen flex items-center justify-center p-6">
+      <div className="relative z-10 min-h-dvh flex items-center justify-center p-4 sm:p-6">
         <div className="relative max-w-4xl w-full bg-white/6 backdrop-blur-sm rounded-2xl shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2 border border-black/5">
           {/* Left: Illustration (tonal, matches homepage) */}
 
@@ -117,12 +117,12 @@ export default function Login() {
           </div>
 
           
-          <div className="p-8 md:p-12 flex items-center justify-center bg-transparent">
+          <div className="p-4 sm:p-8 md:p-12 flex items-center justify-center bg-transparent">
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45 }}
-              className="max-w-md mx-auto bg-white bg-opacity-95 rounded-xl p-6 shadow-md"
+              className="w-full max-w-md mx-auto bg-white bg-opacity-95 rounded-xl p-5 sm:p-6 shadow-md"
             >
               <div className="flex items-center gap-3 mb-6">
                 <div

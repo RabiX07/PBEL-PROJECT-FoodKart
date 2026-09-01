@@ -132,16 +132,16 @@ export default function Orders() {
   return (
     <div className="min-h-screen bg-gray-900 relative text-white">
 
-      <div className="relative z-10 max-w-5xl mx-auto p-10">
+      <div className="relative z-10 max-w-5xl mx-auto p-4 sm:p-6 md:p-10">
 
         {/* Header */}
-        <div className="flex justify-between items-center mb-10">
-          <h1 className="text-3xl font-bold">Your Orders</h1>
+        <div className="flex justify-between items-center mb-6 sm:mb-10">
+          <h1 className="text-2xl sm:text-3xl font-bold">Your Orders</h1>
           
         </div>
 
         {/* ⭐ TABS */}
-        <div className="flex gap-4 mb-8">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8">
           <button
             onClick={() => setActiveTab("active")}
             className={`px-5 py-2 rounded-lg font-semibold transition ${
@@ -182,14 +182,14 @@ export default function Orders() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4 }}
-                  className="bg-white/10 backdrop-blur-xl p-6 rounded-2xl shadow"
+                  className="bg-white/10 backdrop-blur-xl p-4 sm:p-6 rounded-2xl shadow"
                 >
-                  <div className="flex justify-between items-center">
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
                     <div>
-                      <h3 className="text-lg font-semibold">
+                      <h3 className="text-lg font-semibold break-words">
                         Order #{order._id.slice(-6)}
                       </h3>
-                      <p className="text-white/60 text-sm">
+                      <p className="text-white/60 text-sm break-words">
                         {new Date(order.orderDate).toLocaleString()}
                       </p>
                     </div>
@@ -204,13 +204,13 @@ export default function Orders() {
 
                   <div className="mt-4 space-y-2 text-white/80">
                     {order.items.map((item, idx) => (
-                      <div key={idx} className="flex items-center gap-3">
+                      <div key={idx} className="flex min-w-0 items-center gap-3">
                         <img
                           src={item.productId?.imageUrl}
                           alt={item.productId?.name}
                           className="w-12 h-12 rounded-lg object-cover"
                         />
-                        <span>
+                        <span className="min-w-0 break-words">
                           {item.productId?.name} × {item.quantity}
                         </span>
                       </div>
@@ -245,14 +245,14 @@ export default function Orders() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4 }}
-                  className="bg-white/10 backdrop-blur-xl p-6 rounded-2xl shadow border border-green-500/30"
+                  className="bg-white/10 backdrop-blur-xl p-4 sm:p-6 rounded-2xl shadow border border-green-500/30"
                 >
-                  <div className="flex justify-between items-center">
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
                     <div>
-                      <h3 className="text-lg font-semibold">
+                      <h3 className="text-lg font-semibold break-words">
                         Order #{order._id.slice(-6)}
                       </h3>
-                      <p className="text-white/60 text-sm">
+                      <p className="text-white/60 text-sm break-words">
                         {new Date(order.orderDate).toLocaleString()}
                       </p>
                     </div>
@@ -264,13 +264,13 @@ export default function Orders() {
 
                   <div className="mt-4 space-y-2 text-white/80">
                     {order.items.map((item, idx) => (
-                      <div key={idx} className="flex items-center gap-3">
+                      <div key={idx} className="flex min-w-0 items-center gap-3">
                         <img
                           src={item.productId?.imageUrl}
                           alt={item.productId?.name}
                           className="w-12 h-12 rounded-lg object-cover"
                         />
-                        <span>
+                        <span className="min-w-0 break-words">
                           {item.productId?.name} × {item.quantity}
                         </span>
                       </div>

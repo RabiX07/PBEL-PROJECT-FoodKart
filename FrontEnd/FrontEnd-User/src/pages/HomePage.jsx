@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 export default function HomePage() {
   return (
-    <div className="h-screen w-full relative bg-gray-900 text-gray-900">
+    <div className="min-h-dvh w-full relative bg-gray-900 text-gray-900">
       <div className="absolute inset-0 overflow-hidden">
 
         <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
@@ -25,31 +25,31 @@ export default function HomePage() {
 
       {/* Content */}
       <header className="relative z-10">
-        <nav className="max-w-6xl mx-auto px-6 py-6 flex items-center justify-between">
+          <nav className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-6 flex items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-white/90 flex items-center justify-center text-2xl font-extrabold text-indigo-600">FK</div>
             <div className="text-white font-bold text-lg">FoodKart</div>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4 shrink-0">
             <Link to="/login" className="text-white/90 hover:text-white py-2 px-3 rounded-md">Sign in</Link>
             <Link to="/signup" className="bg-white text-indigo-600 px-4 py-2 rounded-lg font-semibold shadow">Get started</Link>
           </div>
         </nav>
       </header>
 
-      <main className="relative z-10 flex items-center justify-center min-h-[calc(100vh-96px)]">
-        <div className="max-w-4xl mx-auto px-6 text-center">
+      <main className="relative z-10 flex items-center justify-center min-h-[calc(100dvh-80px)] pb-20">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <h1 className="text-5xl md:text-6xl font-extrabold text-white drop-shadow-lg">Welcome to <span className="text-amber-300">FoodKart</span></h1>
-            <p className="mt-4 text-lg md:text-xl text-white/90 max-w-2xl mx-auto leading-relaxed">Order your meals directly from the restaurant — no queues, no waiting. Quick ordering, fresh food, and a smooth experience.</p>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white drop-shadow-lg">Welcome to <span className="text-amber-300">FoodKart</span></h1>
+            <p className="mt-4 text-base sm:text-lg md:text-xl text-white/90 max-w-2xl mx-auto leading-relaxed">Order your meals directly from the restaurant — no queues, no waiting. Quick ordering, fresh food, and a smooth experience.</p>
 
-            <div className="mt-8 flex items-center justify-center gap-4">
-              <Link to="/signup" className="inline-flex items-center gap-3 bg-amber-400 text-gray-900 px-6 py-3 rounded-full font-semibold shadow-lg hover:scale-[1.02] transition-transform">Create account</Link>
-              <Link to="/login" className="inline-flex items-center gap-3 border border-white/20 text-white px-5 py-3 rounded-full hover:bg-white/6 transition-colors">Sign in</Link>
+            <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4">
+              <Link to="/signup" className="inline-flex items-center justify-center gap-3 bg-amber-400 text-gray-900 px-6 py-3 rounded-full font-semibold shadow-lg hover:scale-[1.02] transition-transform">Create account</Link>
+              <Link to="/login" className="inline-flex items-center justify-center gap-3 border border-white/20 text-white px-5 py-3 rounded-full hover:bg-white/6 transition-colors">Sign in</Link>
             </div>
 
-            <div className="mt-8 flex items-center justify-center gap-4 text-sm text-white/80">
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm text-white/80">
 
               {/* Instant Ordering */}
               <div className="flex items-center gap-2">
@@ -77,7 +77,7 @@ export default function HomePage() {
 
       {/* Footer */}
       <footer className="absolute bottom-0 left-0 right-0 z-10">
-        <div className="max-w-6xl mx-auto px-6 py-6 text-sm text-white/60 text-center">© {new Date().getFullYear()} FoodKart — Delicious delivered.</div>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-6 text-xs sm:text-sm text-white/60 text-center">© {new Date().getFullYear()} FoodKart — Delicious delivered.</div>
       </footer>
 
       {/* dark overlay to ensure text contrast */}

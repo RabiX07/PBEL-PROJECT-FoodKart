@@ -96,15 +96,15 @@ export default function Settings() {
       </div>
 
       {/* Main Content */}
-      <div className="relative z-10 max-w-3xl mx-auto p-10">
+      <div className="relative z-10 max-w-3xl mx-auto p-4 sm:p-6 md:p-10">
 
-        <h1 className="text-3xl font-bold mb-6">Settings</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold mb-6">Settings</h1>
 
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="bg-white/10 backdrop-blur-xl p-8 rounded-2xl shadow space-y-8"
+          className="bg-white/10 backdrop-blur-xl p-4 sm:p-6 md:p-8 rounded-2xl shadow space-y-8"
         >
 
           {/* Profile Picture */}
