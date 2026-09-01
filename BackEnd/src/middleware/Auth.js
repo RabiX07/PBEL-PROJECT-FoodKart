@@ -4,8 +4,10 @@ export const isLogin = (req, res, next) => {
     try {
         const token = req.cookies.token;
         if (!token) {
+
+             console.log("no cookie")
             return res.status(401).json({ message: "Unauthorized: No token provided" });
-            console.log("no cookie")
+           
         }
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.user = decoded;
