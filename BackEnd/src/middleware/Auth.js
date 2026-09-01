@@ -3,9 +3,9 @@ import jwt from 'jsonwebtoken';
 export const isLogin = (req, res, next) => {
     try {
 
-        console.log("========== AUTH DEBUG ==========");
-        console.log("Cookie header:", req.headers.cookie);
-        console.log("Parsed cookies:", req.cookies);
+        // console.log("========== AUTH DEBUG ==========");
+        // console.log("Cookie header:", req.headers.cookie);
+        // console.log("Parsed cookies:", req.cookies);
 
         const token = req.cookies.token;
 
@@ -16,7 +16,7 @@ export const isLogin = (req, res, next) => {
             });
         }
 
-        console.log("✅ TOKEN RECEIVED");
+        // console.log("✅ TOKEN RECEIVED");
 
         const decoded = jwt.verify(
             token,
